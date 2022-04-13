@@ -6,7 +6,7 @@
 /*   By: slahrach <slahrach@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 16:15:15 by slahrach          #+#    #+#             */
-/*   Updated: 2022/04/12 02:52:11 by slahrach         ###   ########.fr       */
+/*   Updated: 2022/04/12 21:31:01 by slahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,13 @@ int	ft_atoi(const char *str)
 
 void	t_sleep(int time)
 {
-	int	time0;
+	int			i;
+	long long	time0;
 
+	i = 0;
 	time0 = timestamp();
 	while (timestamp() - time0 < time)
-		usleep(100);
+	{
+		usleep(500);
+	}
 }

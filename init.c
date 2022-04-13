@@ -6,7 +6,7 @@
 /*   By: slahrach <slahrach@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 22:09:22 by slahrach          #+#    #+#             */
-/*   Updated: 2022/04/12 02:47:03 by slahrach         ###   ########.fr       */
+/*   Updated: 2022/04/13 01:21:43 by slahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	init_args(t_strct *data, char **argv, int argc)
 	data->t_to_eat = ft_atoi(argv[3]);
 	data->t_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
-		data->optional = ft_atoi(argv[5]);
+		data->opt = ft_atoi(argv[5]);
 	else
-		data->optional = 0;
+		data->opt = -1;
 	if (data->t_to_die < 60
 		|| data->t_to_eat < 60 || data->t_to_sleep < 60)
 		error(1);
@@ -40,24 +40,25 @@ void	init_args(t_strct *data, char **argv, int argc)
 		data->philos[i].last_meal = timestamp();
 	i = 0;
 	while (++i <= data->philo_nbr)
+	{
+		data->philos[i].n_meals = 0;
 		data->philos[i].data = data;
-	i = 0;
-	data->dead = 1;
-	data->all = 0;
+	}
 }
 
 void	create_mutexes(t_strct *data)
 {
 	int	i;
 
-	pthread_mutex_init(&(data->eating), NULL);
 	pthread_mutex_init(&(data->lktaba), NULL);
+	//pthread_mutex_init(&data->meal, NULL);
 	i = 0;
 	data->forks = malloc (data->philo_nbr * sizeof (pthread_mutex_t));
 	while (++i <= data->philo_nbr)
 		pthread_mutex_init(&(data->forks[i]), NULL);
 	data->philos[1].fork_right = data->philos[1].index;
-	data->philos[1].fork_left = data->philos[data->philo_nbr].index;
+	if (data->philo_nbr > 1)
+		data->philos[1].fork_left = data->philos[data->philo_nbr].index;
 	i = 1;
 	while (++i <= data->philo_nbr)
 	{

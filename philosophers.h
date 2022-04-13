@@ -6,7 +6,7 @@
 /*   By: slahrach <slahrach@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 21:56:56 by slahrach          #+#    #+#             */
-/*   Updated: 2022/04/12 02:39:30 by slahrach         ###   ########.fr       */
+/*   Updated: 2022/04/13 01:18:48 by slahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 # define PHILOSOPHERS_H
 # include <unistd.h>
 # include <stdio.h>
+# include <string.h>
 # include <stdlib.h>
 # include <pthread.h>
 # include <sys/time.h>
 
 typedef struct s_philo
 {
+	int						n_meals;
 	int						index;
 	long long				last_meal;
 	pthread_t				th;
@@ -36,10 +38,8 @@ typedef struct s_strct
 	int				t_to_die;
 	int				t_to_eat;
 	int				t_to_sleep;
-	int				optional;
-	pthread_t		super_th;
+	int				opt;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	eating;
 	pthread_mutex_t	lktaba;
 	t_philo			*philos;
 }	t_strct;
