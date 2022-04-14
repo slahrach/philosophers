@@ -6,13 +6,13 @@
 /*   By: slahrach <slahrach@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 01:23:18 by slahrach          #+#    #+#             */
-/*   Updated: 2022/04/14 04:16:39 by slahrach         ###   ########.fr       */
+/*   Updated: 2022/04/14 04:35:29 by slahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	destroy(t_strct *data)
+void	destroy(t_strct *data, int *check)
 {
 	int	i;
 
@@ -20,6 +20,9 @@ void	destroy(t_strct *data)
 	while (++i <= data->philo_nbr)
 		pthread_mutex_destroy(&(data->forks[i]));
 	pthread_mutex_destroy(&data->lktaba);
+	free(check);
+	free(data->philos);
+	free(data->forks);
 }
 
 void	to_eat(t_philo *philo, t_strct *data)

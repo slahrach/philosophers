@@ -6,7 +6,7 @@
 /*   By: slahrach <slahrach@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 21:56:56 by slahrach          #+#    #+#             */
-/*   Updated: 2022/04/14 03:06:13 by slahrach         ###   ########.fr       */
+/*   Updated: 2022/04/14 04:36:29 by slahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int			ft_atoi(const char *str);
 long long	timestamp(void);
 void		check_args(t_strct *data, char **argv, int argc);
 void		create_mutexes(t_strct *data);
-void		destroy(t_strct *data);
+void		destroy(t_strct *data, int *check);
 void		create_threads(t_strct *data);
 void		messages(t_philo *philo, char *str);
 void		t_sleep(int time, t_strct *data);

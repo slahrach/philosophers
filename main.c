@@ -6,7 +6,7 @@
 /*   By: slahrach <slahrach@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 21:56:32 by slahrach          #+#    #+#             */
-/*   Updated: 2022/04/14 04:12:13 by slahrach         ###   ########.fr       */
+/*   Updated: 2022/04/14 04:36:16 by slahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	checker(t_strct data, int *check, int *j)
 		{
 			messages(&data.philos[i], "died");
 			data.dead = 1;
-			destroy(&data);
+			destroy(&data, check);
 			return (1);
 		}
 	}
@@ -68,5 +68,5 @@ int	main(int argc, const char	**argv)
 		if (j == data.philo_nbr)
 			data.all = 1;
 	}
-	destroy(&data);
+	destroy(&data, check);
 }
