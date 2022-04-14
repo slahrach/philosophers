@@ -6,7 +6,7 @@
 /*   By: slahrach <slahrach@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 21:56:32 by slahrach          #+#    #+#             */
-/*   Updated: 2022/04/13 23:08:03 by slahrach         ###   ########.fr       */
+/*   Updated: 2022/04/14 01:20:55 by slahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,31 @@ long long	timestamp(void)
 	return (time);
 }
 
+int	checker(t_strct data, int *check, int *j)
+{
+	int	i;
+
+	i = 0;
+	while (++i <= data.philo_nbr)
+	{
+		if (data.opt != -1 && data.philos[i].n_meals == data.opt && !check[i])
+		{
+			check[i] = 1;
+			(*j)++;
+		}
+		if (timestamp() - data.philos[i].last_meal >= data.t_to_die)
+		{
+			messages(&data.philos[i], "died");
+			data.dead = 1;
+			destroy(&data);
+			return (1);
+		}
+	}
+	return (0);
+}
+
 int	main(int argc, char	**argv)
 {
-	int		i;
 	int		j;
 	int		*check;
 	t_strct	data;
@@ -39,22 +61,8 @@ int	main(int argc, char	**argv)
 	j = 0;
 	while (!data.all)
 	{
-		i = 0;
-		while (++i <= data.philo_nbr)
-		{
-			if (data.opt != -1 && data.philos[i].n_meals == data.opt && !check[i])
-			{
-				check[i] = 1;
-				j++;
-			}
-			if (timestamp() - data.philos[i].last_meal >= data.t_to_die)
-			{
-				messages(&data.philos[i], 5);
-				data.dead = 1;
-				destroy(&data);
-				return (0);
-			}
-		}
+		if (checker(data, check, &j))
+			return (0);
 		if (j == data.philo_nbr)
 			data.all = 1;
 	}

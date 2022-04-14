@@ -6,7 +6,7 @@
 /*   By: slahrach <slahrach@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 21:56:56 by slahrach          #+#    #+#             */
-/*   Updated: 2022/04/13 22:40:00 by slahrach         ###   ########.fr       */
+/*   Updated: 2022/04/14 00:26:33 by slahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void		check_args(t_strct *data, char **argv, int argc);
 void		create_mutexes(t_strct *data);
 void		destroy(t_strct *data);
 void		create_threads(t_strct *data);
-void		messages(t_philo *philo, int a);
+void		messages(t_philo *philo, char *str);
 void		t_sleep(int time, t_strct *data);
 
 #endif

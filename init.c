@@ -6,17 +6,33 @@
 /*   By: slahrach <slahrach@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 22:09:22 by slahrach          #+#    #+#             */
-/*   Updated: 2022/04/13 23:09:36 by slahrach         ###   ########.fr       */
+/*   Updated: 2022/04/14 01:32:12 by slahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	init_args(t_strct *data, char **argv, int argc)
+static void	init_philo(t_strct *data)
 {
 	int	i;
 
 	i = 0;
+	data->philos = (t_philo *) malloc (data->philo_nbr * sizeof (t_philo));
+	while (++i <= data->philo_nbr)
+		data->philos[i].index = i;
+	i = 0;
+	while (++i <= data->philo_nbr)
+		data->philos[i].last_meal = timestamp();
+	i = 0;
+	while (++i <= data->philo_nbr)
+	{
+		data->philos[i].n_meals = 0;
+		data->philos[i].data = data;
+	}
+}
+
+void	init_args(t_strct *data, char **argv, int argc)
+{
 	data->philo_nbr = ft_atoi(argv[1]);
 	if (!data->philo_nbr || data->philo_nbr > 200)
 		error(1);
@@ -29,19 +45,8 @@ void	init_args(t_strct *data, char **argv, int argc)
 		data->opt = -1;
 	if (!data->t_to_die || !data->t_to_eat || !data->t_to_sleep)
 		error(1);
-	data->philos = (t_philo *) malloc (data->philo_nbr * sizeof (t_philo));
+	init_philo(data);
 	data->start = timestamp();
-	while (++i <= data->philo_nbr)
-		data->philos[i].index = i;
-	i = 0;
-	while (++i <= data->philo_nbr)
-		data->philos[i].last_meal = timestamp();
-	i = 0;
-	while (++i <= data->philo_nbr)
-	{
-		data->philos[i].n_meals = 0;
-		data->philos[i].data = data;
-	}
 	data->dead = 0;
 	data->all = 0;
 }
@@ -51,7 +56,6 @@ void	create_mutexes(t_strct *data)
 	int	i;
 
 	pthread_mutex_init(&(data->lktaba), NULL);
-	//pthread_mutex_init(&data->meal, NULL);
 	i = 0;
 	data->forks = malloc (data->philo_nbr * sizeof (pthread_mutex_t));
 	while (++i <= data->philo_nbr)
