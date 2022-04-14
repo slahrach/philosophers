@@ -6,7 +6,7 @@
 /*   By: slahrach <slahrach@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 21:56:56 by slahrach          #+#    #+#             */
-/*   Updated: 2022/04/13 01:18:48 by slahrach         ###   ########.fr       */
+/*   Updated: 2022/04/13 22:40:00 by slahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_philo
 typedef struct s_strct
 {
 	int				dead;
+	long long		start;
 	int				all;
 	int				philo_nbr;
 	int				t_to_die;
@@ -53,6 +54,6 @@ void		create_mutexes(t_strct *data);
 void		destroy(t_strct *data);
 void		create_threads(t_strct *data);
 void		messages(t_philo *philo, int a);
-void		t_sleep(int time);
+void		t_sleep(int time, t_strct *data);
 
 #endif

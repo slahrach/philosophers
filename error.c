@@ -6,7 +6,7 @@
 /*   By: slahrach <slahrach@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 22:03:19 by slahrach          #+#    #+#             */
-/*   Updated: 2022/04/12 21:30:33 by slahrach         ###   ########.fr       */
+/*   Updated: 2022/04/13 23:05:48 by slahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,18 @@ void	error(int a)
 
 void	messages(t_philo *philo, int a)
 {
+	if (philo->data->dead || philo->data->all)
+		return ;
 	pthread_mutex_lock(&philo->data->lktaba);
 	if (a == 1)
-		printf("%lld %d has taken fork\n", timestamp(), philo->index);
+		printf("%lld %d has taken fork\n", timestamp() - philo->data->start, philo->index);
 	else if (a == 2)
-		printf("%lld %d is eating\n", timestamp(), philo->index);
+		printf("%lld %d is eating\n", timestamp() - philo->data->start, philo->index);
 	else if (a == 3)
-		printf("%lld %d is sleeping\n", timestamp(), philo->index);
+		printf("%lld %d is sleeping\n", timestamp() - philo->data->start, philo->index);
 	else if (a == 4)
-		printf("%lld %d is thinking\n", timestamp(), philo->index);
+		printf("%lld %d is thinking\n", timestamp() - philo->data->start, philo->index);
+	else if (a == 5)
+		printf("%lld %d died\n", timestamp() - philo->data->start, philo->index);
 	pthread_mutex_unlock(&philo->data->lktaba);
 }

@@ -6,7 +6,7 @@
 /*   By: slahrach <slahrach@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 22:09:22 by slahrach          #+#    #+#             */
-/*   Updated: 2022/04/13 01:21:43 by slahrach         ###   ########.fr       */
+/*   Updated: 2022/04/13 23:09:36 by slahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	init_args(t_strct *data, char **argv, int argc)
 
 	i = 0;
 	data->philo_nbr = ft_atoi(argv[1]);
-	if (!data->philo_nbr || data->philo_nbr > 250)
+	if (!data->philo_nbr || data->philo_nbr > 200)
 		error(1);
 	data->t_to_die = ft_atoi(argv[2]);
 	data->t_to_eat = ft_atoi(argv[3]);
@@ -27,12 +27,10 @@ void	init_args(t_strct *data, char **argv, int argc)
 		data->opt = ft_atoi(argv[5]);
 	else
 		data->opt = -1;
-	if (data->t_to_die < 60
-		|| data->t_to_eat < 60 || data->t_to_sleep < 60)
-		error(1);
 	if (!data->t_to_die || !data->t_to_eat || !data->t_to_sleep)
 		error(1);
 	data->philos = (t_philo *) malloc (data->philo_nbr * sizeof (t_philo));
+	data->start = timestamp();
 	while (++i <= data->philo_nbr)
 		data->philos[i].index = i;
 	i = 0;
@@ -44,6 +42,8 @@ void	init_args(t_strct *data, char **argv, int argc)
 		data->philos[i].n_meals = 0;
 		data->philos[i].data = data;
 	}
+	data->dead = 0;
+	data->all = 0;
 }
 
 void	create_mutexes(t_strct *data)

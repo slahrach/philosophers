@@ -6,7 +6,7 @@
 /*   By: slahrach <slahrach@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 21:56:32 by slahrach          #+#    #+#             */
-/*   Updated: 2022/04/13 01:22:25 by slahrach         ###   ########.fr       */
+/*   Updated: 2022/04/13 23:08:03 by slahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ long long	timestamp(void)
 
 int	main(int argc, char	**argv)
 {
-	int		*check;
-	int		all;
 	int		i;
+	int		j;
+	int		*check;
 	t_strct	data;
 
 	if (argc < 5)
@@ -34,10 +34,10 @@ int	main(int argc, char	**argv)
 	init_args(&data, argv, argc);
 	create_mutexes(&data);
 	create_threads(&data);
-	check = (int *) malloc (sizeof (int) * (data.philo_nbr + 1));
+	check = malloc (sizeof (int) * (data.philo_nbr + 1));
 	memset(check, 0, (data.philo_nbr + 1) * sizeof (int));
-	all = 0;
-	while (1)
+	j = 0;
+	while (!data.all)
 	{
 		i = 0;
 		while (++i <= data.philo_nbr)
@@ -45,16 +45,17 @@ int	main(int argc, char	**argv)
 			if (data.opt != -1 && data.philos[i].n_meals == data.opt && !check[i])
 			{
 				check[i] = 1;
-				all++;
+				j++;
 			}
 			if (timestamp() - data.philos[i].last_meal >= data.t_to_die)
 			{
-				printf("%lld %d died\n", timestamp(), data.philos[i].index);
+				messages(&data.philos[i], 5);
+				data.dead = 1;
 				destroy(&data);
 				return (0);
 			}
 		}
-		if (all == data.philo_nbr)
-			return (0);
+		if (j == data.philo_nbr)
+			data.all = 1;
 	}
 }
