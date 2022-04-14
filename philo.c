@@ -6,7 +6,7 @@
 /*   By: slahrach <slahrach@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 01:23:18 by slahrach          #+#    #+#             */
-/*   Updated: 2022/04/14 00:27:47 by slahrach         ###   ########.fr       */
+/*   Updated: 2022/04/14 04:16:39 by slahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ void	destroy(t_strct *data)
 void	to_eat(t_philo *philo, t_strct *data)
 {
 	pthread_mutex_lock(&data->forks[philo->fork_right]);
-	pthread_mutex_lock(&data->forks[philo->fork_left]);
 	messages(philo, "has taken a fork");
+	if (data->all || data->dead)
+		return ;
+	pthread_mutex_lock(&data->forks[philo->fork_left]);
 	messages(philo, "has taken a fork");
 	messages(philo, "is eating");
 	philo->last_meal = timestamp();
@@ -45,8 +47,6 @@ void	*process(void *philo_v)
 
 	philo = (t_philo *) philo_v;
 	data = philo->data;
-	if (data->philo_nbr == 1)
-		return (NULL);
 	id = philo->index;
 	if (id % 2 == 0)
 		usleep(1500);

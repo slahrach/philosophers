@@ -6,7 +6,7 @@
 /*   By: slahrach <slahrach@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 16:15:15 by slahrach          #+#    #+#             */
-/*   Updated: 2022/04/13 23:02:50 by slahrach         ###   ########.fr       */
+/*   Updated: 2022/04/14 03:31:12 by slahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	t_sleep(int time, t_strct *data)
 
 	i = 0;
 	time0 = timestamp();
-	while (!data->dead && !data->all)
+	while (!data->dead)
 	{
 		if (timestamp() - time0 >= time)
 			break ;

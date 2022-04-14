@@ -6,7 +6,7 @@
 /*   By: slahrach <slahrach@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 21:56:56 by slahrach          #+#    #+#             */
-/*   Updated: 2022/04/14 00:26:33 by slahrach         ###   ########.fr       */
+/*   Updated: 2022/04/14 03:06:13 by slahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_strct
 }	t_strct;
 
 void		error(int a);
-void		init_args(t_strct *data, char **argv, int argc);
+void		init_args(t_strct *data, const char **argv, int argc);
 int			ft_atoi(const char *str);
 long long	timestamp(void);
 void		check_args(t_strct *data, char **argv, int argc);
@@ -55,5 +55,6 @@ void		destroy(t_strct *data);
 void		create_threads(t_strct *data);
 void		messages(t_philo *philo, char *str);
 void		t_sleep(int time, t_strct *data);
+int			ft_strcmp(const char *s1, const char *s2);
 
 #endif

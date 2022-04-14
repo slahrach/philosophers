@@ -6,7 +6,7 @@
 /*   By: slahrach <slahrach@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 21:56:32 by slahrach          #+#    #+#             */
-/*   Updated: 2022/04/14 01:20:55 by slahrach         ###   ########.fr       */
+/*   Updated: 2022/04/14 04:12:13 by slahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	checker(t_strct data, int *check, int *j)
 	return (0);
 }
 
-int	main(int argc, char	**argv)
+int	main(int argc, const char	**argv)
 {
 	int		j;
 	int		*check;
@@ -61,9 +61,12 @@ int	main(int argc, char	**argv)
 	j = 0;
 	while (!data.all)
 	{
+		if (data.opt == 0)
+			data.all = 1;
 		if (checker(data, check, &j))
 			return (0);
 		if (j == data.philo_nbr)
 			data.all = 1;
 	}
+	destroy(&data);
 }
