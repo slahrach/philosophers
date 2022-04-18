@@ -6,7 +6,7 @@
 /*   By: slahrach <slahrach@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 01:23:18 by slahrach          #+#    #+#             */
-/*   Updated: 2022/04/14 04:35:29 by slahrach         ###   ########.fr       */
+/*   Updated: 2022/04/16 02:56:17 by slahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	destroy(t_strct *data, int *check)
 {
 	int	i;
 
-	i = 0;
-	while (++i <= data->philo_nbr)
+	i = -1;
+	while (++i < data->philo_nbr)
 		pthread_mutex_destroy(&(data->forks[i]));
 	pthread_mutex_destroy(&data->lktaba);
 	free(check);
@@ -35,9 +35,9 @@ void	to_eat(t_philo *philo, t_strct *data)
 	messages(philo, "has taken a fork");
 	messages(philo, "is eating");
 	philo->last_meal = timestamp();
+	t_sleep(data->t_to_eat, data);
 	if (data->opt != -1)
 		philo->n_meals++;
-	t_sleep(data->t_to_eat, data);
 	pthread_mutex_unlock(&data->forks[philo->fork_right]);
 	pthread_mutex_unlock(&data->forks[philo->fork_left]);
 }
@@ -57,6 +57,8 @@ void	*process(void *philo_v)
 	{
 		to_eat(philo, data);
 		messages(philo, "is sleeping");
+		if (data->all || data->dead)
+			return (NULL);
 		t_sleep(data->t_to_sleep, data);
 		messages(philo, "is thinking");
 	}
@@ -67,10 +69,11 @@ void	create_threads(t_strct *data)
 {
 	int		i;
 
-	i = 0;
-	while (++i <= data->philo_nbr)
+	i = -1;
+	data->start = timestamp();
+	while (++i < data->philo_nbr)
 		pthread_create(&(data->philos[i].th), NULL, &process, &data->philos[i]);
-	i = 0;
-	while (++i <= data->philo_nbr)
+	i = -1;
+	while (++i < data->philo_nbr)
 		pthread_detach(data->philos[i].th);
 }

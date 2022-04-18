@@ -6,7 +6,7 @@
 /*   By: slahrach <slahrach@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 16:15:15 by slahrach          #+#    #+#             */
-/*   Updated: 2022/04/14 03:31:12 by slahrach         ###   ########.fr       */
+/*   Updated: 2022/04/14 05:19:21 by slahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_atoi(const char *str)
 	int		sign;
 	long	nbr;
 
-	if (ft_strlen(str) > 10)
+	if (ft_strlen(str) > 11)
 		return (0);
 	sign = 1;
 	nbr = 0;

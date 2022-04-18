@@ -6,7 +6,7 @@
 /*   By: slahrach <slahrach@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 21:56:32 by slahrach          #+#    #+#             */
-/*   Updated: 2022/04/14 04:36:16 by slahrach         ###   ########.fr       */
+/*   Updated: 2022/04/16 02:57:00 by slahrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,24 @@ long long	timestamp(void)
 	return (time);
 }
 
-int	checker(t_strct data, int *check, int *j)
+static int	checker(t_strct *data, int *check, int *j)
 {
 	int	i;
 
-	i = 0;
-	while (++i <= data.philo_nbr)
+	i = -1;
+	while (++i < data->philo_nbr)
 	{
-		if (data.opt != -1 && data.philos[i].n_meals == data.opt && !check[i])
+		if (data->opt != -1 && data->philos[i].n_meals == data->opt
+			&& !check[i])
 		{
 			check[i] = 1;
 			(*j)++;
 		}
-		if (timestamp() - data.philos[i].last_meal >= data.t_to_die)
+		if (timestamp() - data->philos[i].last_meal >= data->t_to_die)
 		{
-			messages(&data.philos[i], "died");
-			data.dead = 1;
-			destroy(&data, check);
+			messages(&data->philos[i], "died");
+			data->dead = 1;
+			destroy(data, check);
 			return (1);
 		}
 	}
@@ -51,22 +52,20 @@ int	main(int argc, const char	**argv)
 	int		*check;
 	t_strct	data;
 
-	if (argc < 5)
-		error(0);
-	init_args(&data, argv, argc);
+	if (init_args(&data, argv, argc))
+		return (0);
 	create_mutexes(&data);
 	create_threads(&data);
-	check = malloc (sizeof (int) * (data.philo_nbr + 1));
-	memset(check, 0, (data.philo_nbr + 1) * sizeof (int));
+	check = malloc (sizeof (int) * (data.philo_nbr));
+	memset(check, 0, (data.philo_nbr) * sizeof (int));
 	j = 0;
 	while (!data.all)
 	{
-		if (data.opt == 0)
-			data.all = 1;
-		if (checker(data, check, &j))
+		if (checker(&data, check, &j))
 			return (0);
 		if (j == data.philo_nbr)
 			data.all = 1;
 	}
 	destroy(&data, check);
+	return (0);
 }
